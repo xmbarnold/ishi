@@ -1,14 +1,40 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
     <h1>
-        Welcome to NOT WebMb!
+        Welcome to {{ title }}!
     </h1>
-
-    <button (click)="getBodyLocations()">Get Body Locations</button>
-    <div *ngIf="getBodyLocations">
-        {{ bodyLocations }}
+    <div>
+        <button (click)="setSex('man')" class="btn btn-dark">MAN</button>
+        <button (click)="setSex('woman')" class="btn btn-dark">WOMAN</button>
+        <button (click)="setSex('boy')" class="btn btn-dark">BOY</button>
+        <button (click)="setSex('girl')" class="btn btn-dark">GIRL</button>
     </div>
-    
+    <br>
+    <button (click)="getBodyLocations()" class="btn btn-dark">Get Body Locations</button>
+    <div *ngIf="getBodyLocations">
+        <p *ngFor="let location of bodyLocations">
+            <br>
+            <button (click)="getSubLocations(location.ID)" class="btn btn-dark">{{ location.Name }}</button>
+        </p>
+    </div>
+    <br>
+    <div *ngIf="getSubLocations">
+        <div *ngFor="let location of subLocations">
+            <br>
+            <button (click)="getSymptoms(location.ID)" class="btn btn-dark">{{ location.Name }}</button>
+        </div>
+    </div>
+    <div *ngIf="getSymptoms">
+        <div *ngFor="let symptom of symptoms">
+            <br>
+            <button (click)="setSelectedSymptoms(symptom.ID)">{{ symptom.Name }}</button>
+            <!-- <button (click)="getSymptoms(location.ID)" class="btn btn-dark">{{ location.Name }}</button> -->
+        </div>
+    </div>
+    <h5>DIAGNOSIS: </h5>
+    <div *ngFor="let result of diagnosis">
+        <p>{{result.Issue.Name}}</p>
+    </div>
 
 
     <router-outlet></router-outlet>

@@ -7,9 +7,15 @@ import { HttpService } from './http.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-    title = 'public';
+    title = 'Not WebMD';
     bodyLocations;
-    headLocations;
+    subLocations;
+    sexSelector = "man";
+    symptoms;
+    selectedSymptoms = [];
+    diagnosis;
+    sex = "male";
+    age = 1980;
 
     constructor(private _httpService: HttpService){}
 
@@ -21,16 +27,54 @@ export class AppComponent implements OnInit{
     }
     getBodyLocations(){
         let observable = this._httpService.getBody();
-        observable.subscribe(function (data) {
-            console.log(data);
+        observable.subscribe((data) => {
+            // console.log(data);
             this.bodyLocations = data;
             console.log(this.bodyLocations);
         })
     }
-    getHeadLocations(){
-        let observable = this._httpService.getHeadLocations();
+    getSubLocations(bodyID){
+        let observable = this._httpService.getSub(bodyID);
         observable.subscribe((data) => {
-            this.headLocations = data;
+            this.subLocations = data;
+        })
+    }
+    getSymptoms(subBodyID){
+        let observable = this._httpService.getBodySublocationSymptoms(subBodyID, this.sexSelector);
+        observable.subscribe((data) => {
+            this.symptoms = data;
+            console.log(this.symptoms);
+        })
+    }
+    setSex(val){
+        this.sexSelector = val;
+        if(val == "boy" || val == "girl"){
+            this.age = 2010;
+        }
+        if(val == "boy" || val == "man"){
+            this.sex = "male";
+        }
+        else{
+            this.sex = "female";
+        }
+        console.log(this.sexSelector);
+    }
+    setSelectedSymptoms(symptomID){
+        for(let i=0; i<this.selectedSymptoms.length; i++){
+            if(this.selectedSymptoms[i] == symptomID){
+                this.selectedSymptoms.splice(i,1);
+                this.getDiagnosis();
+                return undefined;
+            }
+        }
+        this.selectedSymptoms.push(symptomID);
+        this.getDiagnosis();
+    }
+    getDiagnosis(){
+        let observable = this._httpService.getDiagnosis(JSON.stringify(this.selectedSymptoms), this.sex, this.age);
+        observable.subscribe((data) =>{
+            this.diagnosis = data;
+            console.log(this.diagnosis);
         })
     }
 }

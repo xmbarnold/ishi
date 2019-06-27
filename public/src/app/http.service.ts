@@ -25,7 +25,7 @@ export class HttpService {
         // "i3_kim@hotmail.com": this.computedHashString,
     })
     // options = new RequestOptions({})
-    api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImkzX2tpbUBob3RtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNjQ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDE2LTA4LTI1IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1NjE2NTExOTUsIm5iZiI6MTU2MTY0Mzk5NX0.QOAlBM7zr1Loalph2KHLCu1z-ScpOPIqqwyHzsWkzGU"
+    api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImkzX2tpbUBob3RtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNjQ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDE2LTA4LTI1IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1NjE2NjIzNjEsIm5iZiI6MTU2MTY1NTE2MX0.AxtKPp0VxOP1aZaLI3f6RhfFn0SdAlA3lDt9kHFQdA0"
 
 
 
@@ -49,8 +49,16 @@ export class HttpService {
         return this._http.get(`${this.healthroute}/body/locations?token=${this.api_token}&format=json&language=en-gb`);
     }
 
-    getHeadLocations(){
-        return this._http.get(`${this.healthroute}/body/locations/6?token=${this.api_token}&format=json&language=en-gb`);
+    getSub(bodyID){
+        return this._http.get(`${this.healthroute}/body/locations/${bodyID}?token=${this.api_token}&format=json&language=en-gb`);
+    }
+
+    getBodySublocationSymptoms(subBodyID, selectorStatus){ // man, woman, boy, girl
+        return this._http.get(`${this.healthroute}/symptoms/${subBodyID}/${selectorStatus}?token=${this.api_token}&format=json&language=en-gb`);
+    }
+
+    getDiagnosis(selectedSymptoms, sex, yearOfBirth){
+        return this._http.get(`${this.healthroute}/diagnosis?token=${this.api_token}&language=en-gb&symptoms=${selectedSymptoms}&gender=${sex}&year_of_birth=${yearOfBirth}`);
     }
 
 
