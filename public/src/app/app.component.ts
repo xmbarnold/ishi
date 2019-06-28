@@ -20,10 +20,10 @@ export class AppComponent implements OnInit{
     constructor(private _httpService: HttpService){}
 
     ngOnInit(){
-        // let observable = this._httpService.getToken();
-        // observable.subscribe((data)=>{
-        //     console.log(data);
-        // })
+        let observable = this._httpService.getToken();
+        observable.subscribe((data)=>{
+            console.log(data);
+        })
     }
     getBodyLocations(){
         let observable = this._httpService.getBody();

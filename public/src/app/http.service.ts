@@ -19,13 +19,11 @@ export class HttpService {
     healthroute = 'https://sandbox-healthservice.priaid.ch';
     authroute = 'https://sandbox-authservice.priaid.ch';
     headers = new HttpHeaders({
-        // Host: "sandbox-authservice.priaid.ch",
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.api_key}:${this.computedHashString}`,
-        // "i3_kim@hotmail.com": this.computedHashString,
+        // Authorization: `Bearer ${this.api_key}:${this.secret_key}`
     })
-    // options = new RequestOptions({})
-    api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImkzX2tpbUBob3RtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNjQ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDE2LTA4LTI1IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1NjE2NjIzNjEsIm5iZiI6MTU2MTY1NTE2MX0.AxtKPp0VxOP1aZaLI3f6RhfFn0SdAlA3lDt9kHFQdA0"
+    api_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImkzX2tpbUBob3RtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNjQ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDE2LTA4LTI1IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1NjE3NDMxNDgsIm5iZiI6MTU2MTczNTk0OH0.KMr8VFWfEOLhcynrcLU8vPX_yFfvSbO1uPXBBmMcZg4"
 
 
 
@@ -34,14 +32,10 @@ export class HttpService {
     // API calls here
     // example
 
-    // login(){
-    //     return this._http.post(`https://sandbox-authservice.priaid.ch/login?`, this.parameters);
-    // }
-
     getToken(){
         console.log(this.computedHashString);
         // console.log(this._http.post(`${this.authroute}/login?format=json&language=en-gb`, "", {headers:this.headers}));
-        return this._http.post(`${this.authroute}/login`, "", {headers:this.headers});
+        return this._http.post(`${this.uri}`, "", {headers:this.headers});
     }
 
     getBody(){
