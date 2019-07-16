@@ -16,6 +16,7 @@ export class AppComponent implements OnInit{
     diagnosis;
     sex = "male";
     age = 1980;
+    api_token;
 
     constructor(private _httpService: HttpService){}
 
@@ -23,10 +24,11 @@ export class AppComponent implements OnInit{
         let observable = this._httpService.getToken();
         observable.subscribe((data)=>{
             console.log(data);
+            this.api_token = data["Token"];
         })
     }
     getBodyLocations(){
-        let observable = this._httpService.getBody();
+        let observable = this._httpService.getBody(this.api_token);
         observable.subscribe((data) => {
             // console.log(data);
             this.bodyLocations = data;
@@ -34,13 +36,13 @@ export class AppComponent implements OnInit{
         })
     }
     getSubLocations(bodyID){
-        let observable = this._httpService.getSub(bodyID);
+        let observable = this._httpService.getSub(bodyID, this.api_token);
         observable.subscribe((data) => {
             this.subLocations = data;
         })
     }
     getSymptoms(subBodyID){
-        let observable = this._httpService.getBodySublocationSymptoms(subBodyID, this.sexSelector);
+        let observable = this._httpService.getBodySublocationSymptoms(subBodyID, this.sexSelector, this.api_token);
         observable.subscribe((data) => {
             this.symptoms = data;
             console.log(this.symptoms);
@@ -71,10 +73,15 @@ export class AppComponent implements OnInit{
         this.getDiagnosis();
     }
     getDiagnosis(){
-        let observable = this._httpService.getDiagnosis(JSON.stringify(this.selectedSymptoms), this.sex, this.age);
+        let observable = this._httpService.getDiagnosis(JSON.stringify(this.selectedSymptoms), this.sex, this.age, this.api_token);
         observable.subscribe((data) =>{
             this.diagnosis = data;
             console.log(this.diagnosis);
         })
+    }
+
+    resetSelectedSymptoms(){
+        this.selectedSymptoms = [];
+        this.getDiagnosis();
     }
 }
